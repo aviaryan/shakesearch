@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -171,7 +172,13 @@ func (s *ShakespeareSearch) Search(query string) SearchResponse {
 	response := SearchResponse{}
 	for _, work := range s.Works {
 		idxs := work.SuffixArray.Lookup([]byte(queryLowerCased), -1)
+		lastCoveredIdxMax := 0
+		sort.Ints(idxs)
 		for _, idx := range idxs {
+			if idx < lastCoveredIdxMax {
+				// if idxMax already covered next match, ignore it and go to next
+				continue
+			}
 			idxMin := idx-250
 			if idxMin < 0 {
 				idxMin = 0
@@ -180,6 +187,7 @@ func (s *ShakespeareSearch) Search(query string) SearchResponse {
 			if idxMax > len(work.CompleteWork) {
 				idxMax = len(work.CompleteWork)
 			}
+			lastCoveredIdxMax = idxMax
 			result := work.CompleteWork[idxMin:idxMax]
 			resultHighlighted := queryRegex.ReplaceAllString(result, "<mark>${1}</mark>")
 			responseUnit := ResponseUnit{}

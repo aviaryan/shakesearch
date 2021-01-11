@@ -39,7 +39,9 @@ current state, can be deployed easily on Heroku's free tier.
 - [x] Add linebreaks to search results to make them readable and helpful in getting context.
 - [x] Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
 - [x] Add loader on UI to show it's searching.
+- [x] Return searches in index order to make sense of the story.
 - [x] Prevent searches like "GUTENBERG" from showing in results.
 - [x] Fix bug where string slicing goes out of bound and an application error happens (at the end).
+- [x] Fix duplicate searches if search query is in vicinity (try searching `hamlet`, then Cmd-F `madness is poor`).
+- [ ] Unicode breaking at the end of trim, fix it (try searching `hamlet`, then Cmd-F `madness is poor`).
 - [ ] Add option for word search.
-- [ ] Unicode breaking on the page, fix it.
