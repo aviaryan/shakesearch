@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -78,8 +79,11 @@ func (s *Searcher) Search(query string) []string {
 	queryLowerCased := strings.ToLower(query)
 	idxs := s.SuffixArray.Lookup([]byte(queryLowerCased), -1)
 	results := []string{}
+	queryRegex := regexp.MustCompile("(?i)(" + query + ")")
 	for _, idx := range idxs {
-		results = append(results, s.CompleteWorks[idx-250:idx+250])
+		result := s.CompleteWorks[idx-250:idx+250]
+		resultHighlighted := queryRegex.ReplaceAllString(result, "<mark>${1}</mark>")
+		results = append(results, resultHighlighted)
 	}
 	return results
 }
