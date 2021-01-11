@@ -19,11 +19,12 @@ const Controller = {
       count.innerHTML = "0";
       return;
     }
-    table.style.display = "block";
+    table.style.display = "table";
     const tableBody = document.getElementById("table-body");
     const rows = [];
     for (let result of results) {
-      const row = `<tr><td>${result.match}</td><td>${result.work}</td></tr>`;
+      const formattedMatch = result.match.replace(/\r\n/g, '<br/>')
+      const row = `<tr><td>${formattedMatch}</td><td>${result.work}</td></tr>`;
       rows.push(row);
     }
     tableBody.innerHTML = rows.join('');
