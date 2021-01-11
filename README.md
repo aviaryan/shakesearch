@@ -32,13 +32,13 @@ current state, can be deployed easily on Heroku's free tier.
 
 ## Upgrades
 
-* Add option for case-insensitive search ("hamlet").
-* Highlight search result in web app to end-user.
-* Return book/play name with the search result.
-* Add option for word search.
-* Show search results cleanly in table with book/play name, search results count, etc.
-* Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
-* Add loader on UI to show it's searching.
-* Prevent searches like "GUTENBERG" from showing in results.
-* Fix bug where string slicing goes out of bound and an application error happens (at the end).
-* Unicode breaking on the page, fix it.
+- [x] Add option for case-insensitive search ("hamlet").
+- [x] Highlight search result in web app to end-user.
+- [x] Return book/play name with the search result.
+- [ ] Add option for word search.
+- [x] Show search results cleanly in table with book/play name, search results count, etc.
+- [x] Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
+- [ ] Add loader on UI to show it's searching.
+- [x] Prevent searches like "GUTENBERG" from showing in results.
+- [x] Fix bug where string slicing goes out of bound and an application error happens (at the end).
+- [ ] Unicode breaking on the page, fix it.
