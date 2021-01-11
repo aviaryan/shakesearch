@@ -84,7 +84,6 @@ func handleSearch(searcher ShakespeareSearch) func(w http.ResponseWriter, r *htt
 func (s *ShakespeareSearch) Load(fn string) (err error) {
 	works := WorkParser{}
 	works.Load()
-	// "  FINIS"
 
 	file, err := os.Open(fn)
 	if err != nil {
@@ -96,10 +95,8 @@ func (s *ShakespeareSearch) Load(fn string) (err error) {
 	// https://stackoverflow.com/a/41741702/2295672
 	reader := bufio.NewReader(file)
 	var line string
-	// var currentSearcher Searcher
 	var currentWorkText string
 	var currentWorkName string
-	// count := 0
 	contentStarted := false
 	contentEnd := false
 	for {
@@ -113,7 +110,6 @@ func (s *ShakespeareSearch) Load(fn string) (err error) {
 		}
 
 		// Process the line here.
-		// fmt.Printf(" > Read %s line\n", line)
 		if works.Search(line) || contentEnd {
 			// past work had started or content has ended
 			if (contentStarted || contentEnd) {
@@ -132,39 +128,20 @@ func (s *ShakespeareSearch) Load(fn string) (err error) {
 			contentStarted = true
 			currentWorkText = ""
 			currentWorkName = strings.TrimSuffix(line, "\r\n")
-			// fmt.Printf(" > Read %d characters\n", len(line))
-			// fmt.Printf(" > Read %s line\n", line)
 		} else if contentStarted {
 			currentWorkText += line
 		}
-		// fmt.Printf(" > > %s\n", limitLength(line, 50))
 
 		if err != nil {
 			break
 		}
-		// count++
-		// if count > 50 {
-		// 	break
-		// }
 	}
-	// fmt.Printf("count %d", count)
 	if !contentEnd && err != io.EOF {
 		fmt.Printf(" > Failed with error: %v\n", err)
 		return err
 	}
 	return
 }
-
-// func (s *Searcher) Load(filename string) error {
-// 	dat, err := ioutil.ReadFile(filename)
-// 	if err != nil {
-// 		return fmt.Errorf("Load: %w", err)
-// 	}
-// 	s.CompleteWorks = string(dat)
-// 	dataLowerCased := bytes.ToLower(dat)
-// 	s.SuffixArray = suffixarray.New(dataLowerCased)
-// 	return nil
-// }
 
 func (s *ShakespeareSearch) Search(query string) SearchResponse {
 	queryLowerCased := strings.ToLower(query)
