@@ -33,17 +33,17 @@ current state, can be deployed easily on Heroku's free tier.
 ## Upgrades
 
 - [x] Add <s>option</s>feature for case-insensitive search ("hamlet").
-- [x] Highlight search result in web app to end-user.
+- [x] Highlight search query occurances on the web app (server-side highlighting via `<mark>` works in this case).
 - [x] Return book/play name with the search result.
 - [x] Show search results in a table with book/play name, search results count, etc.
-- [x] Add linebreaks to search results to make them readable and helpful in getting context.
-- [x] Add scroll-to-top to return to the top search bar.
+- [x] Add `<br>` in search results to make them readable and helpful in getting context.
+- [x] Add scroll-to-top button to return to the search bar.
 - [x] Make it usable on mobile.
 - [x] Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
-- [x] Add loader on UI to show it's searching.
-- [x] Return searches in index order to make sense of the story.
+- [x] Add a loading message in UI when searching.
+- [x] Return results in order of the story so that end-user can follow filter results and make sense of the story.
 - [x] Prevent searches like "GUTENBERG" from showing in results.
 - [x] Fix bug where string slicing goes out of bound and an application error happens (at the end).
-- [x] Fix duplicate searches if search query is in vicinity (try searching `hamlet`, then Cmd-F `madness is poor`).
-- [ ] Unicode breaking at the end of trim, fix it (try searching `hamlet`, then Cmd-F `madness is poor`).
-- [ ] Add option for word search.
+- [x] Fix very-similar results which happens if search query is present many times near one another (try searching `hamlet`, then Cmd-F `madness is poor`).
+- [ ] Unicode breaking if unicode is at the point of trim (16 bytes v/s 8 bytes I think) (try searching `hamlet`, then Cmd-F `a moiety`).
+- [ ] Add feature for word-bound search.
