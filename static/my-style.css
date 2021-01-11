@@ -2,6 +2,10 @@ body {
 	font-family: Arial, sans-serif;
 }
 
+p.count-container {
+	text-align: center;
+}
+
 table {
 	width: 95%;
 	max-width: 1400px;

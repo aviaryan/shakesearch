@@ -12,9 +12,11 @@ const Controller = {
 
   updateTable: (results) => {
     const table = document.getElementById("table");
+    const count = document.getElementById("count-value");
     // results can be null because of golang behavior
     if (!results || results.length === 0) {
       table.style.display = "none";
+      count.innerHTML = "0";
       return;
     }
     table.style.display = "block";
@@ -25,6 +27,7 @@ const Controller = {
       rows.push(row);
     }
     tableBody.innerHTML = rows.join('');
+    count.innerHTML = results.length;
   },
 };
 
