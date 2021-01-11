@@ -32,7 +32,7 @@ current state, can be deployed easily on Heroku's free tier.
 
 ## Upgrades
 
-- [x] Add option for case-insensitive search ("hamlet").
+- [x] Add <s>option</s>feature for case-insensitive search ("hamlet").
 - [x] Highlight search result in web app to end-user.
 - [x] Return book/play name with the search result.
 - [x] Show search results in a table with book/play name, search results count, etc.
