@@ -11,11 +11,11 @@ const Controller = {
   },
 
   updateTable: (results) => {
-    console.log(results);
     const table = document.getElementById("table-body");
     const rows = [];
     for (let result of results) {
-      rows.push(`<tr>${result.match} -- ${result.work}<tr/>`);
+      const row = `<tr><td>${result.match}</td><td>${result.work}</td></tr>`;
+      rows.push(row);
     }
     table.innerHTML = rows;
   },

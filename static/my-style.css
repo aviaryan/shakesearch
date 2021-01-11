@@ -1,0 +1,10 @@
+table {
+	width: 95%;
+	max-width: 1400px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td {
+	border: 1px solid black;
+}
