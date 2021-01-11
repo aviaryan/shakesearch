@@ -38,7 +38,7 @@ current state, can be deployed easily on Heroku's free tier.
 - [x] Show search results in a table with book/play name, search results count, etc.
 - [x] Add linebreaks to search results to make them readable and helpful in getting context.
 - [x] Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
-- [ ] Add loader on UI to show it's searching.
+- [x] Add loader on UI to show it's searching.
 - [x] Prevent searches like "GUTENBERG" from showing in results.
 - [x] Fix bug where string slicing goes out of bound and an application error happens (at the end).
 - [ ] Add option for word search.

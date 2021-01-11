@@ -1,8 +1,12 @@
+const table = document.getElementById("table");
+const count = document.getElementById("count-value");
+const form = document.getElementById("form");
+
 const Controller = {
   search: (ev) => {
     ev.preventDefault();
-    const form = document.getElementById("form");
     const data = Object.fromEntries(new FormData(form));
+    Controller.showLoading();
     const response = fetch(`/search?q=${data.query}`).then((response) => {
       response.json().then((result) => {
         Controller.updateTable(result['results']);
@@ -10,12 +14,14 @@ const Controller = {
     });
   },
 
+  showLoading: () => {
+    table.style.display = "none";
+    count.innerHTML = "Loading...";
+  },
+
   updateTable: (results) => {
-    const table = document.getElementById("table");
-    const count = document.getElementById("count-value");
     // results can be null because of golang behavior
     if (!results || results.length === 0) {
-      table.style.display = "none";
       count.innerHTML = "0";
       return;
     }
@@ -32,5 +38,4 @@ const Controller = {
   },
 };
 
-const form = document.getElementById("form");
 form.addEventListener("submit", Controller.search);
