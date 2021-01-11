@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"index/suffixarray"
@@ -52,6 +51,15 @@ type WorkParser struct {
 	worksMap map[string]bool
 }
 
+type SearchResponse struct {
+	Results []ResponseUnit `json:"results"`
+}
+
+type ResponseUnit struct {
+	Work string `json:"work"`
+	Match string `json:"match"`
+}
+
 func handleSearch(searcher ShakespeareSearch) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		query, ok := r.URL.Query()["q"]
@@ -60,17 +68,15 @@ func handleSearch(searcher ShakespeareSearch) func(w http.ResponseWriter, r *htt
 			w.Write([]byte("missing search query in URL params"))
 			return
 		}
-		results := searcher.Search(query[0])
-		buf := &bytes.Buffer{}
-		enc := json.NewEncoder(buf)
-		err := enc.Encode(results)
+		response := searcher.Search(query[0])
+		jData, err := json.Marshal(response)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("encoding failure"))
+			w.Write([]byte("json marshal failure"))
 			return
 		}
 		w.Header().Set("Content-Type", "application/json")
-		w.Write(buf.Bytes())
+		w.Write(jData)
 	}
 }
 
@@ -159,10 +165,10 @@ func (s *ShakespeareSearch) Load(fn string) (err error) {
 // 	return nil
 // }
 
-func (s *ShakespeareSearch) Search(query string) []string {
+func (s *ShakespeareSearch) Search(query string) SearchResponse {
 	queryLowerCased := strings.ToLower(query)
 	queryRegex := regexp.MustCompile("(?i)(" + query + ")")
-	results := []string{}
+	response := SearchResponse{}
 	for _, work := range s.Works {
 		idxs := work.SuffixArray.Lookup([]byte(queryLowerCased), -1)
 		for _, idx := range idxs {
@@ -176,10 +182,13 @@ func (s *ShakespeareSearch) Search(query string) []string {
 			}
 			result := work.CompleteWork[idxMin:idxMax]
 			resultHighlighted := queryRegex.ReplaceAllString(result, "<mark>${1}</mark>")
-			results = append(results, resultHighlighted)
+			responseUnit := ResponseUnit{}
+			responseUnit.Match = resultHighlighted
+			responseUnit.Work = work.WorkTitle
+			response.Results = append(response.Results, responseUnit)
 		}
 	}
-	return results
+	return response
 }
 
 func (w *WorkParser) Search(val string) bool {
