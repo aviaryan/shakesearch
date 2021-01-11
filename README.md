@@ -38,6 +38,7 @@ current state, can be deployed easily on Heroku's free tier.
 - [x] Show search results in a table with book/play name, search results count, etc.
 - [x] Add linebreaks to search results to make them readable and helpful in getting context.
 - [x] Add scroll-to-top to return to the top search bar.
+- [x] Make it usable on mobile.
 - [x] Trim context information around the searched phrase if it goes out of context of the book/play (try searching `water cools`). 
 - [x] Add loader on UI to show it's searching.
 - [x] Return searches in index order to make sense of the story.
